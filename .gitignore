@@ -1,0 +1,9 @@
+# Виртуальные окружения
+*/venv/
+*/__pycache__/
+*.pyc
+
+# Данные и базы
+*/employees.db
+*/static/
+*/config.json
