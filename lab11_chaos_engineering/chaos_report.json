@@ -1,0 +1,69 @@
+{
+  "timestamp": "2025-12-09T02:38:51.812588",
+  "experiments": [
+    {
+      "timestamp": "2025-12-09T02:35:40.121477",
+      "type": "NETWORK_LATENCY",
+      "description": "Задержка 377мс в течение 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-09T02:36:20.244559",
+      "type": "MEMORY_PRESSURE",
+      "description": "Память 175MB, 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-09T02:37:01.516365",
+      "type": "HIGH_CPU_LOAD",
+      "description": "CPU 65% 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-09T02:37:41.517950",
+      "type": "NETWORK_LATENCY",
+      "description": "Задержка 564мс в течение 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-09T02:38:21.521123",
+      "type": "SERVICE_FAILURE",
+      "description": "Отказ S3 20с",
+      "success": true,
+      "duration": 20
+    }
+  ],
+  "statistics": {
+    "('success', 'count')": {
+      "HIGH_CPU_LOAD": 1,
+      "MEMORY_PRESSURE": 1,
+      "NETWORK_LATENCY": 2,
+      "SERVICE_FAILURE": 1
+    },
+    "('success', 'sum')": {
+      "HIGH_CPU_LOAD": 1,
+      "MEMORY_PRESSURE": 1,
+      "NETWORK_LATENCY": 2,
+      "SERVICE_FAILURE": 1
+    },
+    "('duration', 'mean')": {
+      "HIGH_CPU_LOAD": 20.0,
+      "MEMORY_PRESSURE": 20.0,
+      "NETWORK_LATENCY": 20.0,
+      "SERVICE_FAILURE": 20.0
+    },
+    "('success_rate', '')": {
+      "HIGH_CPU_LOAD": 100.0,
+      "MEMORY_PRESSURE": 100.0,
+      "NETWORK_LATENCY": 100.0,
+      "SERVICE_FAILURE": 100.0
+    }
+  },
+  "total_experiments": 5,
+  "successful_experiments": 5,
+  "success_rate": 100.0
+}

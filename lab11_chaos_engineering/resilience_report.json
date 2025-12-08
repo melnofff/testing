@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-12-09T02:38:53.323057",
+  "total_experiments": 6,
+  "success_rate": 100.0,
+  "avg_duration": 0.22056400775909424,
+  "total_retries": 0,
+  "total_dlq_errors": 0,
+  "total_chaos_experiments": 0,
+  "detailed_metrics": [
+    {
+      "timestamp": "2025-12-09T02:35:20.177267",
+      "iteration": 1,
+      "pipeline_success": true,
+      "pipeline_duration": 0.05681443214416504,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-09T02:36:00.287571",
+      "iteration": 2,
+      "pipeline_success": true,
+      "pipeline_duration": 0.05046224594116211,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-09T02:36:41.348363",
+      "iteration": 3,
+      "pipeline_success": true,
+      "pipeline_duration": 1.0149037837982178,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-09T02:37:21.587337",
+      "iteration": 4,
+      "pipeline_success": true,
+      "pipeline_duration": 0.05916094779968262,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-09T02:38:01.663905",
+      "iteration": 5,
+      "pipeline_success": true,
+      "pipeline_duration": 0.06078290939331055,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-09T02:38:41.765394",
+      "iteration": 6,
+      "pipeline_success": true,
+      "pipeline_duration": 0.08125972747802734,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:3.6
+    container_name: localstack_lab10
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    environment:
+      - SERVICES=s3,sqs,dynamodb,lambda
+      - DEBUG=1
+      - LS_LOG=trace
+    # ❗ УБИРАЕМ volume /tmp/localstack чтобы не ловить ошибку Device busy
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
