@@ -1,0 +1,75 @@
+# CI/CD пайплайн для автоматического запуска тестов
+# Лабораторная работа №7
+
+# Определяем стадии выполнения
+stages:
+  - test
+  - report
+
+# Основная задача - запуск тестов
+run_tests:
+  stage: test
+  image: python:3.9
+
+  # Установка зависимостей
+  before_script:
+    # Обновление пакетного менеджера
+    - apt-get update
+
+    # Установка Google Chrome
+    - apt-get install -y wget unzip
+    - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt-get install -y ./google-chrome-stable_current_amd64.deb
+
+    # Проверка версии Chrome
+    - google-chrome --version
+
+    # Установка Python зависимостей
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+
+  # Запуск тестов с генерацией Allure отчетов
+  script:
+    - echo "Запуск тестов..."
+    - python -m pytest tests/ -v --alluredir=allure-results
+    - echo "Тесты завершены!"
+
+  # Сохранение результатов тестов
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+    expire_in: 1 week
+    reports:
+      junit: allure-results/junit.xml
+
+  # Запускать только при пуше в main ветку
+  only:
+    - main
+    - master
+
+# Дополнительная задача - генерация Allure отчета (опционально)
+generate_allure_report:
+  stage: report
+  image: frankescobar/allure-docker-service:latest
+
+  script:
+    - echo "Генерация Allure отчета..."
+    - allure generate allure-results --clean -o allure-report
+    - echo "Отчет создан!"
+
+  artifacts:
+    when: always
+    paths:
+      - allure-report/
+    expire_in: 1 week
+
+  dependencies:
+    - run_tests
+
+  only:
+    - main
+    - master
+
+  # Запускать, только если есть результаты тестов
+  allow_failure: true
