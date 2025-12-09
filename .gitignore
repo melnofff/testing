@@ -10,3 +10,7 @@
 
 # Claude files
 .claude/
+
+
+# VS Code
+.vscode/
