@@ -14,3 +14,7 @@
 
 # VS Code
 .vscode/
+
+#pytest_cache
+
+.pytest_cache
