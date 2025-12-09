@@ -62,19 +62,21 @@ class ChaosFramework:
     # -------------------- Эксперименты -----------------------
     def network_latency(self, duration=30, latency_ms=1000):
         print(f"🌐 Добавляем сетевую задержку {latency_ms}мс на {duration} секунд...")
-        start_time = time.time()
         self.current_duration = duration
-        
+
         try:
-            original_upload = self.client.upload_csv_to_s3
+            if not hasattr(self, '_original_upload_for_latency'):
+                self._original_upload_for_latency = self.client.upload_csv_to_s3
+
+            latency_end_time = time.time() + duration
 
             def delayed_upload(*args, **kwargs):
-                time.sleep(latency_ms / 1000)
-                return original_upload(*args, **kwargs)
+                if time.time() < latency_end_time:
+                    time.sleep(latency_ms / 1000)
+                return self._original_upload_for_latency(*args, **kwargs)
 
             self.client.upload_csv_to_s3 = delayed_upload
-            time.sleep(duration)
-            self.client.upload_csv_to_s3 = original_upload
+            self._latency_end_time = latency_end_time
 
             self.log_experiment("NETWORK_LATENCY",
                                 f"Задержка {latency_ms}мс в течение {duration}с",
@@ -83,6 +85,15 @@ class ChaosFramework:
         except Exception as e:
             self.log_experiment("NETWORK_LATENCY", f"Ошибка: {e}", False)
             return False
+
+    def stop_network_latency(self):
+        """Останавливаем сетевую задержку"""
+        if hasattr(self, '_original_upload_for_latency'):
+            self.client.upload_csv_to_s3 = self._original_upload_for_latency
+            delattr(self, '_original_upload_for_latency')
+            if hasattr(self, '_latency_end_time'):
+                delattr(self, '_latency_end_time')
+            print("✅ Сетевая задержка остановлена")
 
     def service_failure(self, service_type, failure_duration=20):
         print(f"🔥 Эмулируем отказ {service_type} на {failure_duration} секунд...")
@@ -93,27 +104,35 @@ class ChaosFramework:
                 original_upload = self.client.upload_csv_to_s3
                 original_download = self.client.download_csv_from_s3
 
-                def failing_upload(*args, **kwargs): raise Exception("S3 FAIL")
-                def failing_download(*args, **kwargs): raise Exception("S3 FAIL")
+                def failing_upload(*args, **kwargs):
+                    raise Exception("S3 FAIL")
+                def failing_download(*args, **kwargs):
+                    raise Exception("S3 FAIL")
 
                 self.client.upload_csv_to_s3 = failing_upload
                 self.client.download_csv_from_s3 = failing_download
-                time.sleep(failure_duration)
-                self.client.upload_csv_to_s3 = original_upload
-                self.client.download_csv_from_s3 = original_download
+
+                # Сохраняем оригиналы для восстановления позже
+                self._s3_restore_time = time.time() + failure_duration
+                self._original_s3_upload = original_upload
+                self._original_s3_download = original_download
 
             elif service_type == "SQS":
                 original_send = self.client.send_message
                 original_receive = self.client.receive_messages
 
-                def failing_send(*a, **k): raise Exception("SQS FAIL")
-                def failing_receive(*a, **k): raise Exception("SQS FAIL")
+                def failing_send(*a, **k):
+                    raise Exception("SQS FAIL")
+                def failing_receive(*a, **k):
+                    raise Exception("SQS FAIL")
 
                 self.client.send_message = failing_send
                 self.client.receive_messages = failing_receive
-                time.sleep(failure_duration)
-                self.client.send_message = original_send
-                self.client.receive_messages = original_receive
+
+                # Сохраняем оригиналы для восстановления позже
+                self._sqs_restore_time = time.time() + failure_duration
+                self._original_sqs_send = original_send
+                self._original_sqs_receive = original_receive
 
             self.log_experiment("SERVICE_FAILURE",
                                 f"Отказ {service_type} {failure_duration}с",
@@ -216,6 +235,24 @@ class ChaosFramework:
             self._original_upload_method = None
             print("✅ Коррупция данных остановлена")
 
+    def restore_services(self):
+        """Восстанавливаем все сервисы"""
+        if hasattr(self, '_original_s3_upload'):
+            self.client.upload_csv_to_s3 = self._original_s3_upload
+            self.client.download_csv_from_s3 = self._original_s3_download
+            delattr(self, '_original_s3_upload')
+            delattr(self, '_original_s3_download')
+            delattr(self, '_s3_restore_time')
+            print("✅ S3 сервис восстановлен")
+
+        if hasattr(self, '_original_sqs_send'):
+            self.client.send_message = self._original_sqs_send
+            self.client.receive_messages = self._original_sqs_receive
+            delattr(self, '_original_sqs_send')
+            delattr(self, '_original_sqs_receive')
+            delattr(self, '_sqs_restore_time')
+            print("✅ SQS сервис восстановлен")
+
     # ---------------------------------------------------------
     # Генерация отчета
     # ---------------------------------------------------------
@@ -261,6 +298,7 @@ class ChaosFramework:
     # ---------------------------------------------------------
     def run_chaos_monkey(self, duration=240, interval=20):
         start_time = time.time()
+        experiment_count = 0
         print("🎲 CHAOS MONKEY запущен...")
 
         chaos_methods = [
@@ -275,17 +313,24 @@ class ChaosFramework:
             experiment = random.choice(chaos_methods)
             if experiment == self.network_latency:
                 experiment(duration=interval, latency_ms=random.randint(100, 1000))
+                time.sleep(interval)
+                self.stop_network_latency()
             elif experiment == self.service_failure:
                 experiment(service_type=random.choice(["S3","SQS"]), failure_duration=interval)
+                time.sleep(interval)
+                self.restore_services()
             elif experiment == self.high_cpu_load:
                 experiment(duration=interval, load_percent=random.randint(50,90))
             elif experiment == self.memory_pressure:
                 experiment(duration=interval, memory_mb=random.randint(50,200))
             elif experiment == self.data_corruption:
                 experiment(probability=random.uniform(0.1,0.5))
-            time.sleep(interval)
+                time.sleep(interval)
+                self.stop_data_corruption()
+            experiment_count += 1
 
         print("🎲 CHAOS MONKEY завершён")
+        return experiment_count
 
 
 # ============================================================

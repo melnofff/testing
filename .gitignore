@@ -7,3 +7,6 @@
 */employees.db
 */static/
 */config.json
+
+# Claude files
+.claude/

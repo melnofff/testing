@@ -1,62 +1,62 @@
 {
-  "timestamp": "2025-12-09T02:38:53.323057",
+  "timestamp": "2025-12-09T04:33:36.589553",
   "total_experiments": 6,
   "success_rate": 100.0,
-  "avg_duration": 0.22056400775909424,
+  "avg_duration": 0.19937475522359213,
   "total_retries": 0,
   "total_dlq_errors": 0,
   "total_chaos_experiments": 0,
   "detailed_metrics": [
     {
-      "timestamp": "2025-12-09T02:35:20.177267",
+      "timestamp": "2025-12-09T04:30:05.069934",
       "iteration": 1,
       "pipeline_success": true,
-      "pipeline_duration": 0.05681443214416504,
+      "pipeline_duration": 0.7746238708496094,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T02:36:00.287571",
+      "timestamp": "2025-12-09T04:30:45.303888",
       "iteration": 2,
       "pipeline_success": true,
-      "pipeline_duration": 0.05046224594116211,
+      "pipeline_duration": 0.0851747989654541,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T02:36:41.348363",
+      "timestamp": "2025-12-09T04:31:25.378834",
       "iteration": 3,
       "pipeline_success": true,
-      "pipeline_duration": 1.0149037837982178,
+      "pipeline_duration": 0.05625653266906738,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T02:37:21.587337",
+      "timestamp": "2025-12-09T04:32:05.607647",
       "iteration": 4,
       "pipeline_success": true,
-      "pipeline_duration": 0.05916094779968262,
+      "pipeline_duration": 0.1781902313232422,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T02:38:01.663905",
+      "timestamp": "2025-12-09T04:32:45.674942",
       "iteration": 5,
       "pipeline_success": true,
-      "pipeline_duration": 0.06078290939331055,
+      "pipeline_duration": 0.053150177001953125,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T02:38:41.765394",
+      "timestamp": "2025-12-09T04:33:25.744318",
       "iteration": 6,
       "pipeline_success": true,
-      "pipeline_duration": 0.08125972747802734,
+      "pipeline_duration": 0.04885292053222656,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0

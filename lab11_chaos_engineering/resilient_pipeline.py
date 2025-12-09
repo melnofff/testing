@@ -2,13 +2,12 @@ import time
 import random
 from datetime import datetime
 import pandas as pd
-from cloud_client import CloudDataClient
 from chaos_framework import ChaosFramework
 
 class ResilientDataPipeline:
     def __init__(self, use_localstack=True):
-        self.client = CloudDataClient(use_localstack)
         self.chaos = ChaosFramework(use_localstack)
+        self.client = self.chaos.client  # Используем тот же клиент, что и в chaos
         self.retry_count = 0
         self.max_retries = 3
         self.setup_infrastructure()
@@ -50,28 +49,33 @@ class ResilientDataPipeline:
             try:
                 print(f"🔄 Попытка загрузки {attempt + 1}/{max_retries}...")
                 success = self.client.upload_csv_to_s3(dataframe, bucket_name, file_key)
-                
+
                 if success:
                     print("✅ Данные успешно загружены")
                     return True
                 else:
                     print("❌ Ошибка загрузки, повторяем...")
-                    time.sleep(2 ** attempt)  # Экспоненциальная backoff задержка
-                    
+                    if attempt < max_retries - 1:  # Не делаем задержку после последней попытки
+                        time.sleep(2 ** attempt)  # Экспоненциальная backoff задержка
+
             except Exception as e:
                 print(f"❌ Ошибка на попытке {attempt + 1}: {e}")
-                time.sleep(2 ** attempt)
-        
+                if attempt < max_retries - 1:  # Не делаем задержку после последней попытки
+                    time.sleep(2 ** attempt)
+
         # Если все попытки не удались, отправляем в dead letter queue
         print("💀 Все попытки не удались, отправляем в DLQ...")
-        error_message = {
-            'error_type': 'UPLOAD_FAILED',
-            'bucket': bucket_name,
-            'file_key': file_key,
-            'timestamp': datetime.now().isoformat(),
-            'attempts': max_retries
-        }
-        self.client.send_message(self.dead_letter_queue, error_message)
+        try:
+            error_message = {
+                'error_type': 'UPLOAD_FAILED',
+                'bucket': bucket_name,
+                'file_key': file_key,
+                'timestamp': datetime.now().isoformat(),
+                'attempts': max_retries
+            }
+            self.client.send_message(self.dead_letter_queue, error_message)
+        except Exception as e:
+            print(f"❌ Не удалось отправить сообщение в DLQ: {e}")
         return False
     
     def process_with_circuit_breaker(self, operation_func, *args, **kwargs):
