@@ -18,3 +18,7 @@
 #pytest_cache
 
 .pytest_cache
+
+# Coverage
+.coverage
+htmlcov/
