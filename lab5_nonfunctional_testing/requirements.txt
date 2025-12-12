@@ -1,0 +1,37 @@
+# Python dependencies for Lab 5 - Non-functional Testing
+
+# Core dependencies
+requests>=2.31.0          # HTTP library for API testing
+psutil>=5.9.6            # System and process utilities for monitoring
+
+# Optional but recommended
+urllib3>=2.1.0           # HTTP client (used by requests)
+certifi>=2023.11.17      # SSL certificates
+
+# For enhanced features (optional)
+# pytest>=7.4.3          # Testing framework (if needed for test automation)
+# pytest-timeout>=2.2.0  # Timeout support for pytest
+# locust>=2.17.0         # Alternative load testing tool
+# numpy>=1.24.0          # For statistical analysis
+# matplotlib>=3.8.0      # For visualization (graphs)
+# pandas>=2.1.0          # For data analysis
+
+# Docker SDK (optional, for Docker-based scaling tests)
+# docker>=6.1.3
+
+# Database drivers (optional, for direct DB testing)
+# mysql-connector-python>=8.2.0  # MySQL driver
+# psycopg2-binary>=2.9.9         # PostgreSQL driver
+# pymongo>=4.6.0                 # MongoDB driver
+
+# Monitoring and metrics (optional)
+# prometheus-client>=0.19.0
+
+# Installation instructions:
+# pip install -r requirements.txt
+
+# For development environment:
+# pip install -r requirements.txt --upgrade
+
+# Minimum Python version required: 3.8+
+# Recommended Python version: 3.11

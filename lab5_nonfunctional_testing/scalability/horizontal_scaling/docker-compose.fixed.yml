@@ -1,0 +1,26 @@
+# docker-compose.fixed.yml - with HAProxy config
+version: '3.8'
+services:
+  web:
+    image: nginx:latest
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    networks:
+      - loadbalance
+
+  loadbalancer:
+    image: haproxy:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./haproxy.simple.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    networks:
+      - loadbalance
+
+networks:
+  loadbalance:
+    driver: overlay
