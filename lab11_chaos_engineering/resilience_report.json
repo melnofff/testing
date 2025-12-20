@@ -1,62 +1,80 @@
 {
-  "timestamp": "2025-12-09T04:33:36.589553",
-  "total_experiments": 6,
-  "success_rate": 100.0,
-  "avg_duration": 0.19937475522359213,
+  "timestamp": "2025-12-20T14:00:35.910707",
+  "total_experiments": 8,
+  "success_rate": 87.5,
+  "avg_duration": 0.02418893575668335,
   "total_retries": 0,
   "total_dlq_errors": 0,
   "total_chaos_experiments": 0,
   "detailed_metrics": [
     {
-      "timestamp": "2025-12-09T04:30:05.069934",
+      "timestamp": "2025-12-20T13:55:43.197729",
       "iteration": 1,
       "pipeline_success": true,
-      "pipeline_duration": 0.7746238708496094,
+      "pipeline_duration": 0.02797985076904297,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T04:30:45.303888",
+      "timestamp": "2025-12-20T13:56:23.266963",
       "iteration": 2,
       "pipeline_success": true,
-      "pipeline_duration": 0.0851747989654541,
+      "pipeline_duration": 0.020662307739257812,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T04:31:25.378834",
+      "timestamp": "2025-12-20T13:57:03.291595",
       "iteration": 3,
-      "pipeline_success": true,
-      "pipeline_duration": 0.05625653266906738,
+      "pipeline_success": false,
+      "pipeline_duration": 0.015026330947875977,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T04:32:05.607647",
+      "timestamp": "2025-12-20T13:57:43.326686",
       "iteration": 4,
       "pipeline_success": true,
-      "pipeline_duration": 0.1781902313232422,
+      "pipeline_duration": 0.0265352725982666,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T04:32:45.674942",
+      "timestamp": "2025-12-20T13:58:23.362142",
       "iteration": 5,
       "pipeline_success": true,
-      "pipeline_duration": 0.053150177001953125,
+      "pipeline_duration": 0.02776813507080078,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0
     },
     {
-      "timestamp": "2025-12-09T04:33:25.744318",
+      "timestamp": "2025-12-20T13:59:03.392985",
       "iteration": 6,
       "pipeline_success": true,
-      "pipeline_duration": 0.04885292053222656,
+      "pipeline_duration": 0.021999597549438477,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-20T13:59:43.434440",
+      "iteration": 7,
+      "pipeline_success": true,
+      "pipeline_duration": 0.028639554977416992,
+      "retry_count": 0,
+      "dlq_errors": 0,
+      "chaos_experiments": 0
+    },
+    {
+      "timestamp": "2025-12-20T14:00:23.467035",
+      "iteration": 8,
+      "pipeline_success": true,
+      "pipeline_duration": 0.024900436401367188,
       "retry_count": 0,
       "dlq_errors": 0,
       "chaos_experiments": 0

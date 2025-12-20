@@ -54,11 +54,23 @@ def start_localstack():
 
     # Доп. проверка health endpoint
     try:
-        r = requests.get("http://localhost:4566/_localstack/health")
+        r = requests.get("http://localhost:4566/_localstack/health", timeout=30)
         if r.status_code == 200:
-            print("✅ LocalStack готов к работе!")
-            return True
-    except:
+            health = r.json()
+            services = health.get('services', {})
+            # Проверяем что нужные сервисы запущены
+            s3_status = services.get('s3', 'unknown')
+            sqs_status = services.get('sqs', 'unknown')
+            
+            if s3_status in ['running', 'available'] and sqs_status in ['running', 'available']:
+                print(f"✅ LocalStack готов к работе!")
+                print(f"   S3: {s3_status}, SQS: {sqs_status}")
+                return True
+            else:
+                print(f"⚠️ Сервисы ещё запускаются - S3: {s3_status}, SQS: {sqs_status}")
+                return True
+    except Exception as e:
+        print(f"⚠️ Не удалось проверить health: {e}")
         pass
 
     print("⚠️ LocalStack поднялся, но endpoint health не отвечает корректно")
