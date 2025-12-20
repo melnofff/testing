@@ -22,3 +22,10 @@
 # Coverage
 .coverage
 htmlcov/
+
+# Allure
+**/allure-results/
+
+# JMeter
+results/
+**/results/

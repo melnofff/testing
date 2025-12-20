@@ -12,6 +12,9 @@ class TestChaosEngineering:
     
     def test_network_latency(self):
         """Тестируем сетевую задержку"""
+        # Создаем тестовый bucket
+        self.pipeline.client.create_bucket("test-bucket")
+        
         test_data = self.pipeline.generate_sample_data(5)
 
         # Замеряем время выполнения без задержки
@@ -36,6 +39,9 @@ class TestChaosEngineering:
     
     def test_service_failure(self):
         """Тестируем отказ сервиса"""
+        # Создаем тестовый bucket
+        self.pipeline.client.create_bucket("test-bucket")
+        
         # Пытаемся выполнить операцию при отказе S3
         self.chaos.service_failure("S3", 1)
 
@@ -59,6 +65,9 @@ class TestChaosEngineering:
     def test_data_corruption(self):
         """Тестируем коррупцию данных"""
         original_data = self.pipeline.generate_sample_data(10)
+        
+        # Создаем тестовый bucket
+        self.pipeline.client.create_bucket("test-bucket")
         
         # Включаем коррупцию с высокой вероятностью
         self.chaos.data_corruption(1.0)  # 100% вероятность
@@ -85,6 +94,9 @@ class TestChaosEngineering:
     
     def test_retry_mechanism(self):
         """Тестируем механизм повторных попыток"""
+        # Создаем тестовый bucket
+        self.pipeline.client.create_bucket("test-bucket")
+        
         # Создаем данные для теста
         test_data = self.pipeline.generate_sample_data(5)
 

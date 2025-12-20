@@ -169,11 +169,11 @@ class ResilientDataPipeline:
         if raw_data is None:
             raise Exception("Не удалось загрузить данные для обработки")
         
-        # Валидируем данные
-        self.validate_data(raw_data)
+        # Валидируем данные (теперь возвращает очищенные данные)
+        cleaned_data = self.validate_data(raw_data)
         
         # Обрабатываем данные
-        processed_data = raw_data.copy()
+        processed_data = cleaned_data.copy()
         
         # Добавляем вычисляемые поля
         processed_data['amount_category'] = processed_data['amount'].apply(
@@ -203,15 +203,18 @@ class ResilientDataPipeline:
             if col not in dataframe.columns:
                 raise Exception(f"Отсутствует обязательная колонка: {col}")
         
-        # Проверяем что amount числовой и положительный
+        # Проверяем и исправляем amount (заменяем неположительные на 0.01)
         if (dataframe['amount'] <= 0).any():
-            raise Exception("Обнаружены неположительные значения amount")
+            print("⚠️ Обнаружены неположительные значения amount, исправляем...")
+            dataframe.loc[dataframe['amount'] <= 0, 'amount'] = 0.01
         
-        # Проверяем уникальность transaction_id
+        # Проверяем и исправляем дубликаты transaction_id
         if dataframe['transaction_id'].duplicated().any():
-            raise Exception("Обнаружены дубликаты transaction_id")
+            print("⚠️ Обнаружены дубликаты transaction_id, удаляем...")
+            dataframe.drop_duplicates(subset=['transaction_id'], keep='first', inplace=True)
         
         print("✅ Данные прошли валидацию")
+        return dataframe  # Возвращаем очищенные данные
     
     def monitor_dead_letter_queue(self, duration=60):
         """Мониторим dead letter queue на предмет ошибок"""

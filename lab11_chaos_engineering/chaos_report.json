@@ -1,62 +1,104 @@
 {
-  "timestamp": "2025-12-20T13:51:13.529479",
+  "timestamp": "2025-12-20T16:52:20.774322",
   "experiments": [
     {
-      "timestamp": "2025-12-20T13:50:52.173230",
-      "type": "NETWORK_LATENCY",
-      "description": "Задержка 800мс в течение 15с",
+      "timestamp": "2025-12-20T16:48:49.400288",
+      "type": "DATA_CORRUPTION",
+      "description": "Вероятность 45.869468416322476%",
       "success": true,
-      "duration": 15
+      "duration": 0
     },
     {
-      "timestamp": "2025-12-20T13:50:52.173230",
+      "timestamp": "2025-12-20T16:49:09.401373",
       "type": "SERVICE_FAILURE",
-      "description": "Отказ S3 15с",
-      "success": true,
-      "duration": 15
-    },
-    {
-      "timestamp": "2025-12-20T13:51:13.482675",
-      "type": "HIGH_CPU_LOAD",
-      "description": "CPU 60% 20с",
+      "description": "Отказ SQS 20с",
       "success": true,
       "duration": 20
     },
     {
-      "timestamp": "2025-12-20T13:51:13.482675",
+      "timestamp": "2025-12-20T16:49:29.403098",
+      "type": "SERVICE_FAILURE",
+      "description": "Отказ SQS 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:49:49.404087",
       "type": "DATA_CORRUPTION",
-      "description": "Вероятность 50.0%",
+      "description": "Вероятность 15.730334986460315%",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:50:09.405911",
+      "type": "DATA_CORRUPTION",
+      "description": "Вероятность 47.12067248254189%",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:50:29.406308",
+      "type": "NETWORK_LATENCY",
+      "description": "Задержка 645мс в течение 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:50:49.407613",
+      "type": "NETWORK_LATENCY",
+      "description": "Задержка 633мс в течение 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:51:09.409178",
+      "type": "DATA_CORRUPTION",
+      "description": "Вероятность 15.004145502383137%",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:51:49.463751",
+      "type": "MEMORY_PRESSURE",
+      "description": "Память 183MB, 20с",
+      "success": true,
+      "duration": 20
+    },
+    {
+      "timestamp": "2025-12-20T16:51:49.463751",
+      "type": "SERVICE_FAILURE",
+      "description": "Отказ S3 20с",
       "success": true,
       "duration": 20
     }
   ],
   "statistics": {
     "('success', 'count')": {
-      "DATA_CORRUPTION": 1,
-      "HIGH_CPU_LOAD": 1,
-      "NETWORK_LATENCY": 1,
-      "SERVICE_FAILURE": 1
+      "DATA_CORRUPTION": 4,
+      "MEMORY_PRESSURE": 1,
+      "NETWORK_LATENCY": 2,
+      "SERVICE_FAILURE": 3
     },
     "('success', 'sum')": {
-      "DATA_CORRUPTION": 1,
-      "HIGH_CPU_LOAD": 1,
-      "NETWORK_LATENCY": 1,
-      "SERVICE_FAILURE": 1
+      "DATA_CORRUPTION": 4,
+      "MEMORY_PRESSURE": 1,
+      "NETWORK_LATENCY": 2,
+      "SERVICE_FAILURE": 3
     },
     "('duration', 'mean')": {
-      "DATA_CORRUPTION": 20.0,
-      "HIGH_CPU_LOAD": 20.0,
-      "NETWORK_LATENCY": 15.0,
-      "SERVICE_FAILURE": 15.0
+      "DATA_CORRUPTION": 15.0,
+      "MEMORY_PRESSURE": 20.0,
+      "NETWORK_LATENCY": 20.0,
+      "SERVICE_FAILURE": 20.0
     },
     "('success_rate', '')": {
       "DATA_CORRUPTION": 100.0,
-      "HIGH_CPU_LOAD": 100.0,
+      "MEMORY_PRESSURE": 100.0,
       "NETWORK_LATENCY": 100.0,
       "SERVICE_FAILURE": 100.0
     }
   },
-  "total_experiments": 4,
-  "successful_experiments": 4,
+  "total_experiments": 10,
+  "successful_experiments": 10,
   "success_rate": 100.0
 }
